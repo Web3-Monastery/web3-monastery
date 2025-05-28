@@ -1,0 +1,35 @@
+{
+  description = "web3 Monastery Forum config";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    repo = {
+      url = "github:Web3-Monastery/web3-monastery";
+      flake = false;
+    };
+    secrix = {
+      url = "github:Platonic-Systems/secrix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, repo, secrix, ... } @ inputs: let
+    inherit (self) outputs;
+    system = "x86_64-linux";
+    hostName = "web3-monastery-forum";
+  in {
+    apps.${system}.secrix = secrix.secrix self;
+
+    nixosConfigurations = {
+      "${hostName}" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs system hostName; };
+        modules = [
+          "${repo}/main.nix"
+          ./hardware-configuration.nix
+          ./networking.nix
+          secrix.nixosModules.secrix
+        ];
+      };
+    };
+  };
+}
