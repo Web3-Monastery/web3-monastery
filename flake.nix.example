@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     repo = {
       url = "github:Web3-Monastery/web3-monastery";
       flake = false;
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, repo, secrix, ... } @ inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, repo, secrix, ... } @ inputs: let
     inherit (self) outputs;
     system = "x86_64-linux";
     hostName = "web3-monastery-forum";
@@ -22,7 +23,10 @@
 
     nixosConfigurations = {
       "${hostName}" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs system hostName; };
+        specialArgs = {
+          inherit inputs outputs system hostName;
+          pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+        };
         modules = [
           "${repo}/main.nix"
           ./hardware-configuration.nix
