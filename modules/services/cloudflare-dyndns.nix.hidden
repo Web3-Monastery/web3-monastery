@@ -1,0 +1,18 @@
+{ config, ... }:
+
+{
+  services.cloudflare-dyndns = {
+    enable = true;
+    domains = [
+      "web3monastery.org"
+    ];
+    apiTokenFile = config.secrix.services.cloudflare-dyndns.secrets.token.decrypted.path;
+  };
+
+  systemd.services.cloudflare-dyndns = let
+    dep = [ "network-online.target" ];
+  in {
+    after = dep;
+    wants = dep;
+  };
+}
