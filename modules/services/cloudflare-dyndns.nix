@@ -5,6 +5,7 @@
     enable = true;
     domains = [
       "web3monastery.org"
+      "ssh.web3monastery.org"
     ];
     apiTokenFile = config.secrix.services.cloudflare-dyndns.secrets.token.decrypted.path;
   };

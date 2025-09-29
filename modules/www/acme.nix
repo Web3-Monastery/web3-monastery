@@ -2,7 +2,7 @@
 
 {
   security.acme = {
-    defaults.email = "";
+    defaults.email = "dominig@protonmail.com";
     acceptTerms = true;
     defaults = {
       dnsProvider = "cloudflare";
