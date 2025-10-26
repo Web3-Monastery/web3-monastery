@@ -12,5 +12,12 @@
       passwordFile = config.secrix.services.discourse.secrets.passwordFile.decrypted.path;
     };
     database.ignorePostgresqlVersion = true;
+    mail.outgoing = {
+      authentication = "login";
+      username = "no-reply@web3monastery.org";
+      serverAddress = "smtp.protonmail.ch";
+      port = 2525;
+      passwordFile = config.secrix.services.discourse.secrets.smtpPassword.decrypted.path;
+    };
   };
 }

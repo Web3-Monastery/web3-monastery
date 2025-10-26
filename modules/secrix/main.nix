@@ -9,8 +9,11 @@
     };
     services = {
       cloudflare-dyndns.secrets.token.encrypted.file = ./secrets/cloudflare/dns;
-      discourse.secrets.secretKeyBaseFile.encrypted.file = ./secrets/discourse/keyBase;
-      discourse.secrets.passwordFile.encrypted.file = ./secrets/discourse/adminPassword;
+      discourse.secrets = {
+        secretKeyBaseFile.encrypted.file = ./secrets/discourse/keyBase;
+        passwordFile.encrypted.file = ./secrets/discourse/adminPassword;
+        smtpPassword.encrypted.file = ./secrets/discourse/smtpPassword;
+      };
     };
   };
 }
